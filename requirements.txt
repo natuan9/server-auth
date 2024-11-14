@@ -1,5 +1,5 @@
 # generated from manifests external_dependencies
-pysaml2
 email_validator
 lxml
+pysaml2
 python-jose
