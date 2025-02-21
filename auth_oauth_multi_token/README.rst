@@ -66,19 +66,21 @@ Authors
 Contributors
 ------------
 
-- Florent de Labarre <florent.mirieu@gmail.com>
-- Simone Orsi <simone.orsi@camptocamp.com>
-- `Tecnativa <https://www.tecnativa.com/>`__:
+-  Florent de Labarre <florent.mirieu@gmail.com>
+-  Simone Orsi <simone.orsi@camptocamp.com>
+-  `Tecnativa <https://www.tecnativa.com/>`__:
 
-  - Jairo Llopis
-  - Sergio Teruel
+   -  Jairo Llopis
+   -  Sergio Teruel
 
-- Stéphane Bidoul <stephane.bidoul@acsone.eu>
-- Dan Tillinghast
-- Miku Laitinen
-- `Kencove <https://www.kencove.com/>`__:
+-  Stéphane Bidoul <stephane.bidoul@acsone.eu>
+-  Dan Tillinghast
+-  Miku Laitinen
+-  `Kencove <https://www.kencove.com/>`__:
 
-  - Mohamed Alkobrosli
+   -  Mohamed Alkobrosli
+
+-  Christopher Rogos
 
 Maintainers
 -----------
