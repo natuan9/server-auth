@@ -3,7 +3,7 @@
 {
     "name": "OAuth Filter by Domain",
     "summary": "Filter OAuth providers by domain",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "website": "https://github.com/OCA/server-auth",
     "author": "Kencove, Odoo Community Association (OCA)",
     "maintainers": ["natuan9"],
