@@ -1,7 +1,6 @@
 # Copyright 2024 Akretion (http://www.akretion.com).
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from urllib.parse import urlparse
 
 import requests
 
@@ -15,7 +14,8 @@ class CrossConnectServer(models.Model):
     _inherit = "server.env.mixin"
 
     name = fields.Char(
-        required=True, compute="_compute_name", readonly=False, store=True
+        required=True,
+        help="This name will be used for the new created app",
     )
     server_url = fields.Char(required=True)
     api_key = fields.Char(
@@ -38,15 +38,6 @@ class CrossConnectServer(models.Model):
         compute="_compute_web_icon_data", inverse="_inverse_web_icon_data"
     )
 
-    @api.depends("server_url")
-    def _compute_name(self):
-        for record in self:
-            if not record.name or record.name == "/":
-                try:
-                    record.name = urlparse(record.server_url).hostname
-                except Exception:
-                    record.name = "/"
-
     @api.depends("name", "group_ids")
     def _compute_menu_id(self):
         for record in self:
@@ -58,7 +49,7 @@ class CrossConnectServer(models.Model):
                 record.menu_id = False
                 continue
 
-            menu_groups = self.env.ref("base.group_system") | record.group_ids
+            menu_groups = record.group_ids
 
             if not record.menu_id:
                 action = self.env["ir.actions.act_url"].create(
@@ -143,13 +134,15 @@ class CrossConnectServer(models.Model):
         remote_groups_ids = {remote_group["id"] for remote_group in remote_groups}
         self.group_ids.filtered(
             lambda group: group.cross_connect_server_group_id not in remote_groups_ids
-        ).unlink()
+        ).write({"cross_connect_server_id": False})
 
         # Create or Update existing groups
         for remote_group in remote_groups:
-            existing_group = self.group_ids.filtered(
-                lambda group: group.cross_connect_server_group_id == remote_group["id"]
+            existing_group = self.env["res.groups"].search(
+                [("cross_connect_server_group_id", "=", remote_group["id"])]
             )
+            if existing_group and not existing_group.cross_connect_server_id:
+                existing_group.write({"cross_connect_server_id": self.id})
             if existing_group:
                 existing_group.sudo().write(
                     {
@@ -173,8 +166,14 @@ class CrossConnectServer(models.Model):
 
     def action_disable(self):
         for record in self:
-            record.group_ids.unlink()
+            record.group_ids.write({"cross_connect_server_id": False})
 
     @property
     def _server_env_fields(self):
         return {"api_key": {}}
+
+    def unlink(self):
+        for rec in self:
+            # deleting the groups will delete the menu and related action.
+            rec.group_ids.unlink()
+        return super().unlink()
