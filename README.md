@@ -31,6 +31,7 @@ addon | version | maintainers | summary
 [auth_session_timeout](auth_session_timeout/) | 18.0.1.0.0 |  | This module disable all inactive sessions since a given delay
 [base_user_empty_password](base_user_empty_password/) | 18.0.1.0.0 | [![grindtildeath](https://github.com/grindtildeath.png?size=30px)](https://github.com/grindtildeath) | Allows to empty password of users
 [base_user_show_email](base_user_show_email/) | 18.0.1.0.0 |  | Untangle user login and email
+[impersonate_login](impersonate_login/) | 18.0.1.0.0 | [![Kev-Roche](https://github.com/Kev-Roche.png?size=30px)](https://github.com/Kev-Roche) | tools
 
 [//]: # (end addons)
 
